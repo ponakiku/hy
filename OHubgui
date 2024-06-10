@@ -1,0 +1,92 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "O Hub",
+   LoadingTitle = "O Hub",
+   LoadingSubtitle = "by Ponakiku",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "O Hub"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("Main") -- Title, Image
+local MainSection = MainTab:CreateSection("Main")
+
+local Button = MainTab:CreateButton({
+   Name = "infinite yield",
+   Callback = function()
+   loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+   end,
+})
+
+local Toggle = MainTab:CreateToggle({
+   Name = "ESP",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   local color = BrickColor.new(50,0,250)
+local transparency = .8
+
+local Players = game:GetService("Players")
+local function _ESP(c)
+  repeat wait() until c.PrimaryPart ~= nil
+  for i,p in pairs(c:GetChildren()) do
+    if p.ClassName == "Part" or p.ClassName == "MeshPart" then
+      if p:FindFirstChild("shit") then p.shit:Destroy() end
+      local a = Instance.new("BoxHandleAdornment",p)
+      a.Name = "shit"
+      a.Size = p.Size
+      a.Color = color
+      a.Transparency = transparency
+      a.AlwaysOnTop = true    
+      a.Visible = true    
+      a.Adornee = p
+      a.ZIndex = true    
+
+    end
+  end
+end
+local function ESP()
+  for i,v in pairs(Players:GetChildren()) do
+    if v ~= game.Players.LocalPlayer then
+      if v.Character then
+        _ESP(v.Character)
+      end
+      v.CharacterAdded:Connect(function(chr)
+        _ESP(chr)
+      end)
+    end
+  end
+  Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(chr)
+      _ESP(chr)
+    end)  
+  end)
+end
+ESP()
+   end,
+})
+
+local Button = MainTab:CreateButton({
+   Name = "Simple spy",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebin.com/raw/66NjbMN7",true))()
+   end,
+})
